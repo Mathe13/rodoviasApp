@@ -16,8 +16,8 @@
 <ion-content padding style="background-color: #e8e8e8">
   <ion-card class="cartao-redondo">
     <ion-card-header>Histórico de leituras</ion-card-header>
-    <ion-list>
-      <ion-item *ngFor="let item of historico">
+    <ion-list *ngFor="let item of historico">
+      <ion-item>
         <br><b>Acelerômetro</b>
         <br>x:{{item.x}}
         <br> y:{{item.x}}
@@ -25,7 +25,6 @@
         <br><b>Gps</b>
         <br> lat:{{item.lat}}
         <br> lng:{{item.lng}}
-
       </ion-item>
     </ion-list>
   </ion-card>
