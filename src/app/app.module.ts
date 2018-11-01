@@ -5,7 +5,9 @@ import { MyApp } from './app.component';
 
 import { MapaPage } from '../pages/mapa/mapa';
 import { ContactPage } from '../pages/contact/contact';
+import { PrincipalPage } from './../pages/principal/principal';
 import { InicioPage } from './../pages/inicio/inicio';
+
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -23,8 +25,9 @@ import { HistoricoPage } from '../pages/historico/historico';
     MyApp,
     MapaPage,
     ContactPage,
-    InicioPage,
-    HistoricoPage
+    PrincipalPage,
+    HistoricoPage,
+    InicioPage
   ],
   imports: [
     BrowserModule,
@@ -36,8 +39,9 @@ import { HistoricoPage } from '../pages/historico/historico';
     MyApp,
     MapaPage,
     ContactPage,
-    InicioPage,
-    HistoricoPage
+    PrincipalPage,
+    HistoricoPage,
+    InicioPage
   ],
   providers: [
     StatusBar,
