@@ -13,6 +13,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 //importados
+import { Gyroscope } from '@ionic-native/gyroscope';
 import { Geolocation } from '@ionic-native/geolocation';
 import { DeviceMotion } from '@ionic-native/device-motion';
 import { HttpModule } from '@angular/http';
@@ -48,6 +49,7 @@ import { HistoricoPage } from '../pages/historico/historico';
     SplashScreen,
     Geolocation,
     DeviceMotion,
+    Gyroscope,
 
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]

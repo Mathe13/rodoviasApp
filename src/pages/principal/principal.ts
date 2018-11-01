@@ -4,7 +4,7 @@ import { MapaPage } from './../mapa/mapa';
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { Headers } from '@angular/http';
-
+import { Gyroscope, GyroscopeOrientation, GyroscopeOptions } from '@ionic-native/gyroscope';
 
 
 import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device-motion';
@@ -39,7 +39,9 @@ export class PrincipalPage {
     private deviceMotion: DeviceMotion,
     private geolocation: Geolocation,
     private _http: Http,
-    private alertCtrl: AlertController) {
+    private alertCtrl: AlertController,
+    private gyroscope: Gyroscope) {
+
   }
 
   ionViewDidLoad() {
@@ -90,6 +92,18 @@ export class PrincipalPage {
             "z": acceleration.z,
           }
           this.calcula_variacao(payload)
+
+
+          let options: GyroscopeOptions = {
+            frequency: 1000
+          };
+
+          this.gyroscope.getCurrent(options)
+            .then((orientation: GyroscopeOrientation) => {
+              console.log('giroscopio', orientation.x, orientation.y, orientation.z, orientation.timestamp);
+            })
+            .catch()
+
           payload['variation_x'] = this.acelerometer_variation.x
           payload['variation_y'] = this.acelerometer_variation.y
           payload['variation_z'] = this.acelerometer_variation.z
