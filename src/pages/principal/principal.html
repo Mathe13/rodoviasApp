@@ -20,16 +20,16 @@
     </ion-card-header>
 
     <ion-card-content>
-      <ion-item>
-        <ion-label>Tamanho do trecho</ion-label>
-        <ion-select [(ngModel)]="comprimento" multiple="false">
+      <!-- <ion-item> -->
+      <!-- <ion-label>Tamanho do trecho</ion-label> -->
+      <!-- <ion-select [(ngModel)]="comprimento" multiple="false">
           <ion-option value="50">50 metros</ion-option>
           <ion-option value="100">100 metros</ion-option>
           <ion-option value="200">200 metros</ion-option>
           <ion-option value="500">500 metros</ion-option>
 
-        </ion-select>
-      </ion-item>
+        </ion-select> -->
+      <!-- </ion-item> -->
       <button ion-button color="danger" full round (click)="stop()" *ngIf="status">Cancelar</button>
       <button ion-button color="secondary" full round (click)="start()" *ngIf="!status">Iniciar</button>
     </ion-card-content>
