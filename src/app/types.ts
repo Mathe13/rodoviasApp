@@ -5,7 +5,7 @@ export interface dados {
     gyroscope: cartesian_coordinates;
     gyroscope_variation: cartesian_coordinates;
     speed: number;
-    aceleraion: number;
+    aceleration: number;
 }
 
 export function registro(): dados {
@@ -16,7 +16,7 @@ export function registro(): dados {
         gyroscope_variation: cartesian_coordinates(),
         location: location(),
         speed: 0,
-        aceleraion: 0,
+        aceleration: 0,
 
     }
 }

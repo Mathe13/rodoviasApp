@@ -1,5 +1,5 @@
 import { utils } from './../../app/utils';
-import { registro, dados } from './../../app/types';
+import { registro, dados, location } from './../../app/types';
 import { HistoricoPage } from './../historico/historico';
 import { base_url, sensorInterval } from './../../app/config';
 import { MapaPage } from './../mapa/mapa';
@@ -29,6 +29,7 @@ export class PrincipalPage {
   //variaveis
   aviso = false
   status = false
+  ultimo: any = null
   addr = ""
   data_ant
   inicio = { lat: '', lng: '' }
@@ -106,7 +107,6 @@ export class PrincipalPage {
           } else {
             tmp.accelerometer_variation = utils.coordinates_variation(this.registros[this.registros.length - 1].accelerometer, tmp.accelerometer)
           }
-          console.log('valor a ser guardado', tmp)
 
           let options: GyroscopeOptions = {
             frequency: 1000
@@ -115,41 +115,80 @@ export class PrincipalPage {
           this.gyroscope.getCurrent(options)
             .then((orientation: GyroscopeOrientation) => {
               console.log('giroscopio', orientation.x, orientation.y, orientation.z, orientation.timestamp);
-              tmp.gyroscope = { x: orientation.x, y: orientation.y, z: orientation.z }
-            })
-            .catch(
+              tmp.gyroscope = {
+                x: orientation.x,
+                y: orientation.y,
+                z: orientation.z
+              }
+              if (this.ultimo == null) {
+                tmp.speed = 0
+                tmp.aceleration = 0
+                this.ultimo = {
+                  location: {
+                    lat: tmp.location.lat,
+                    lng: tmp.location.lng,
+                  },
+                  speed: 0,
+                  aceleration: 0
+                }
 
+              } else {
+                let deltaT = ((Date.now() - this.ultimo.tempo) / 1000)
+                tmp.speed = (utils.haversineDistance(this.ultimo.location, tmp.location) / deltaT)
+                tmp.aceleration = ((tmp.speed - this.ultimo.speed) / deltaT)
+                this.ultimo = {
+                  location: {
+                    lat: tmp.location.lat,
+                    lng: tmp.location.lng,
+                  },
+                  speed: tmp.speed,
+                  aceleration: tmp.aceleration,
+                  tempo: Date.now()
+                }
+              }
+              console.log('valor a ser guardado', tmp)
+              this.sendData(tmp)
+              this.registros.push(tmp)
+            })
+            .catch((err) => {
+              console.log('erro giro', err)
+              this.alertCtrl.create({
+                title: 'Erro de sensor',
+                subTitle: 'giroscópio não disponivel',
+                buttons: [{ text: 'ok' }]
+              }).present()
+              this.status = false
+            }
             )
 
           if (this.status == false) {
+            console.log("vai parar")
             this.motionWatcher.unsubscribe()
           }
-          // var header = new Headers()
-          // header.append('Content-Type', 'application/json')
-          // console.log(base_url + "oscilacao")
-          // this._http.post(base_url + "oscilacao", payload, { headers: header })
-          //   .toPromise()
-          //   .then(() => {
-          //     console.log("cadastoru")
-          //     this.location = { lat: String(payload.lat), lng: String(payload.lng) }
-          //     this.acelerometer_historic.push(payload)
-          //     this.acelerometer = { x: String(payload.x), y: String(payload.y), z: String(payload.z) }
-          //     this._http.get("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + payload.lat + "," + payload.lng + "&key=AIzaSyDkK8945ckkbgGP93QtliiGL-ea84WJ8vo")
-          //       .map(res => res.json())
-          //       .toPromise()
-          //       .then((res) => {
-          //         this.addr = res['results'][0]['formatted_address']
-          //         console.log(res)
 
-          //       })
-          //   }).catch((err) => {
-          //     console.log("erro", err)
-          //   })
         }).catch((err) => console.log("erro ao pegar localização", err))
 
       });
   }
-
+  sendData(payload: dados) {
+    var header = new Headers()
+    header.append('Content-Type', 'application/json')
+    console.log(base_url + "oscilacao")
+    this._http.post(base_url + "oscilacao", payload, { headers: header })
+      .toPromise()
+      .then(() => {
+        console.log("cadastoru")
+        this._http.get("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + payload.location.lat + "," + payload.location.lng + "&key=AIzaSyDkK8945ckkbgGP93QtliiGL-ea84WJ8vo")
+          .map(res => res.json())
+          .toPromise()
+          .then((res) => {
+            this.addr = res['results'][0]['formatted_address']
+            console.log(res)
+          })
+      }).catch((err) => {
+        console.log("erro", err)
+      })
+  }
   pushHistorico() {
     this.navCtrl.push(HistoricoPage, { historico: this.acelerometer_historic })
   }
