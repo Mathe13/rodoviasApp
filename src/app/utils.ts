@@ -3,7 +3,7 @@ import { cartesian_coordinates, registro } from './types';
 export class utils {
     utils() { }
 
-    static haversineDistance(latlngA, latlngB, isMiles = false) {
+    static haversineDistance(latlngA, latlngB) {
         const toRad = x => (x * Math.PI) / 180;
         const R = 6371; // km raio da terra
 
@@ -17,16 +17,18 @@ export class utils {
         const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         let distance = R * c;
 
-        if (isMiles) distance /= 1.60934;
+        // if (isMiles) distance /= 1.60934;
 
         return distance;
     }
 
     static coordinates_variation(a: cartesian_coordinates, b: cartesian_coordinates): cartesian_coordinates {
+        console.log("a:", a, "b:", b)
         let c = cartesian_coordinates()
         c.x = b.x - a.x
         c.y = b.y - a.y
         c.z = b.z - a.z
+        console.log('variacao', c)
         return c
     }
 

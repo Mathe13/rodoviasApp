@@ -42,8 +42,8 @@
         <ion-col>Endereço:{{addr}}</ion-col>
       </ion-row>
       <ion-row>
-        <ion-col>lat:{{location.lat}}</ion-col>
-        <ion-col>lng:{{location.lng}}</ion-col>
+        <ion-col>lat:{{mostra.location.lat}}</ion-col>
+        <ion-col>lng:{{mostra.location.lng}}</ion-col>
       </ion-row>
     </ion-card-content>
     <ion-row>
@@ -63,16 +63,16 @@
 
     <ion-card-content>
       <ion-row id="x-row">
-        <ion-col>x:{{acelerometer.x}}</ion-col>
-        <ion-col>Δx:{{acelerometer_variation.x}}</ion-col>
+        <ion-col>x:{{mostra.accelerometer.x}}</ion-col>
+        <ion-col>Δx:{{mostra.accelerometer_variation.x}}</ion-col>
       </ion-row>
       <ion-row id="y-row">
-        <ion-col>y:{{acelerometer.y}}</ion-col>
-        <ion-col>Δy:{{acelerometer_variation.y}}</ion-col>
+        <ion-col>y:{{mostra.accelerometer.y}}</ion-col>
+        <ion-col>Δy:{{mostra.accelerometer_variation.y}}</ion-col>
       </ion-row>
       <ion-row id="z-row">
-        <ion-col>z:{{acelerometer.z}}</ion-col>
-        <ion-col>Δz:{{acelerometer_variation.z}}</ion-col>
+        <ion-col>z:{{mostra.accelerometer.z}}</ion-col>
+        <ion-col>Δz:{{mostra.accelerometer_variation.z}}</ion-col>
       </ion-row>
     </ion-card-content>
     <ion-row>
@@ -82,11 +82,37 @@
           <div>Histórico</div>
         </button>
       </ion-col>
-      <!-- <ion-col>
-        <ion-note>
-          {{acelerometer_historic.length}}
-        </ion-note>
-      </ion-col> -->
     </ion-row>
   </ion-card>
+
+
+  <ion-card class="cartao-redondo">
+    <ion-card-header>
+      Giroscópio
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-row id="x-row">
+        <ion-col>x:{{mostra.gyroscope.x}}</ion-col>
+        <ion-col>Δx:{{mostra.gyroscope_variation.x}}</ion-col>
+      </ion-row>
+      <ion-row id="y-row">
+        <ion-col>y:{{mostra.gyroscope.y}}</ion-col>
+        <ion-col>Δy:{{mostra.gyroscope_variation.y}}</ion-col>
+      </ion-row>
+      <ion-row id="z-row">
+        <ion-col>z:{{mostra.gyroscope.z}}</ion-col>
+        <ion-col>Δz:{{mostra.gyroscope_variation.z}}</ion-col>
+      </ion-row>
+    </ion-card-content>
+    <ion-row>
+      <ion-col>
+        <button ion-button icon-start clear small (click)="pushHistorico()">
+          <ion-icon name="list-box"></ion-icon>
+          <div>Histórico</div>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+
 </ion-content>

@@ -30,6 +30,7 @@ export class PrincipalPage {
   aviso = false
   status = false
   ultimo: any = null
+  mostra = registro()
   addr = ""
   data_ant
   inicio = { lat: '', lng: '' }
@@ -70,16 +71,6 @@ export class PrincipalPage {
     }
   }
   start() {
-    // if (this.comprimento == 0) {
-    //   this.alertCtrl.create(
-    //     {
-    //       title: 'Erro',
-    //       subTitle: 'Por favor selecione uma distancia',
-    //       buttons: [{ text: 'ok' }]
-    //     })
-    //     .present()
-    //      return
-    // }
     this.status = true
     console.log('valor do select:', this.comprimento)
     this.monitorar()
@@ -93,19 +84,23 @@ export class PrincipalPage {
     }).present()
   }
   monitorar() {
-    let tmp: dados = registro()
+    let tmp: dados
     console.log("tmp criado", tmp)
     this.motionWatcher = this.deviceMotion.watchAcceleration({ frequency: sensorInterval })
-      .subscribe((acceleration: DeviceMotionAccelerationData) => {
-        console.log('aceleracao', acceleration);
+      .subscribe((sensor_acceleration: DeviceMotionAccelerationData) => {
+        tmp = registro()
+        console.log('aceleracao', sensor_acceleration);
         this.geolocation.getCurrentPosition().then((loc) => {
           console.log('gps', loc)
-          tmp.accelerometer = { x: acceleration.x, y: acceleration.y, z: acceleration.z }
+          tmp.accelerometer = { x: sensor_acceleration.x, y: sensor_acceleration.y, z: sensor_acceleration.z }
           tmp.location = { lat: loc.coords.latitude, lng: loc.coords.longitude }
           if (this.registros.length == 0) {
+            // console.log('0 registros')
             tmp.accelerometer_variation = utils.coordinates_variation(tmp.accelerometer, tmp.accelerometer)
           } else {
-            tmp.accelerometer_variation = utils.coordinates_variation(this.registros[this.registros.length - 1].accelerometer, tmp.accelerometer)
+            // console.log('mais de 1 registro')
+            console.log(this.registros, this.registros.length - 1)
+            tmp.accelerometer_variation = utils.coordinates_variation(this.registros[this.registros.length - 1].accelerometer, { x: sensor_acceleration.x, y: sensor_acceleration.y, z: sensor_acceleration.z })
           }
 
           let options: GyroscopeOptions = {
@@ -120,35 +115,54 @@ export class PrincipalPage {
                 y: orientation.y,
                 z: orientation.z
               }
+              if (this.registros.length == 0) {
+                // console.log('0 registros')
+                tmp.gyroscope_variation = utils.coordinates_variation(tmp.gyroscope, tmp.gyroscope)
+              } else {
+                // console.log('mais de 1 registro')
+                console.log(this.registros, this.registros.length - 1)
+                tmp.gyroscope_variation = utils.coordinates_variation(this.registros[this.registros.length - 1].gyroscope, { x: orientation.x, y: orientation.y, z: orientation.z })
+              }
               if (this.ultimo == null) {
+                // console.log("ultimo = null")
                 tmp.speed = 0
-                tmp.aceleration = 0
+                tmp.acceleration = 0
                 this.ultimo = {
                   location: {
                     lat: tmp.location.lat,
                     lng: tmp.location.lng,
                   },
                   speed: 0,
-                  aceleration: 0
+                  acceleration: 0,
+                  tempo: Date.now()
                 }
 
               } else {
+                /*
                 let deltaT = ((Date.now() - this.ultimo.tempo) / 1000)
-                tmp.speed = (utils.haversineDistance(this.ultimo.location, tmp.location) / deltaT)
-                tmp.aceleration = ((tmp.speed - this.ultimo.speed) / deltaT)
+                console.log("deltat = ", deltaT)
+                console.log('distancia', (utils.haversineDistance(this.ultimo.location, tmp.location)))
+                tmp.speed = ((utils.haversineDistance(this.ultimo.location, tmp.location)) / deltaT)
+                console.log("deta speed", (tmp.speed - this.ultimo.speed))
+                tmp.acceleration = ((tmp.speed - this.ultimo.speed) / deltaT)*/
+                tmp.speed = 0
+                tmp.acceleration = 0
                 this.ultimo = {
                   location: {
                     lat: tmp.location.lat,
                     lng: tmp.location.lng,
                   },
                   speed: tmp.speed,
-                  aceleration: tmp.aceleration,
+                  acceleration: tmp.acceleration,
                   tempo: Date.now()
                 }
               }
-              console.log('valor a ser guardado', tmp)
+              // console.log('valor a ser guardado', tmp)
               this.sendData(tmp)
-              this.registros.push(tmp)
+              this.registros[this.registros.length] = (tmp)
+              console.log('esse é o array', this.registros, 'e esse o novo valor', tmp)
+              console.log("comparando, tmp:", tmp.accelerometer, 'e o sensor:', sensor_acceleration)
+              this.mostra = tmp
             })
             .catch((err) => {
               console.log('erro giro', err)
