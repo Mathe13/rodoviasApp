@@ -14,18 +14,68 @@
 
 
 <ion-content padding style="background-color: #e8e8e8">
-  <ion-card class="cartao-redondo">
-    <ion-card-header>Histórico de leituras</ion-card-header>
-    <ion-list *ngFor="let item of historico">
-      <ion-item>
-        <br><b>Acelerômetro</b>
-        <br>x:{{item.x}}
-        <br> y:{{item.x}}
-        <br> z:{{item.x}}
-        <br><b>Gps</b>
-        <br> lat:{{item.lat}}
-        <br> lng:{{item.lng}}
-      </ion-item>
-    </ion-list>
-  </ion-card>
+  <!-- <ion-card class="cartao-redondo"> -->
+  <ion-card-header>Histórico de leituras</ion-card-header>
+  <ion-list *ngFor="let item of historico">
+
+
+    <ion-card class="cartao-redondo">
+      <ion-card-header>Gps</ion-card-header>
+      <ion-card-content>
+        <ion-row>
+          <ion-col>lat:{{item.location.lat}}</ion-col>
+          <ion-col>lng:{{item.location.lng}}</ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="cartao-redondo">
+      <ion-card-header>
+        Acelerômetro
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-row id="x-row">
+          <ion-col>x:{{item.accelerometer.x}}</ion-col>
+          <ion-col>Δx:{{item.accelerometer_variation.x}}</ion-col>
+        </ion-row>
+        <ion-row id="y-row">
+          <ion-col>y:{{item.accelerometer.y}}</ion-col>
+          <ion-col>Δy:{{item.accelerometer_variation.y}}</ion-col>
+        </ion-row>
+        <ion-row id="z-row">
+          <ion-col>z:{{item.accelerometer.z}}</ion-col>
+          <ion-col>Δz:{{item.accelerometer_variation.z}}</ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+
+
+    <ion-card class="cartao-redondo">
+      <ion-card-header>
+        Giroscópio
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-row id="x-row">
+          <ion-col>x:{{item.gyroscope.x}}</ion-col>
+          <ion-col>Δx:{{item.gyroscope_variation.x}}</ion-col>
+        </ion-row>
+        <ion-row id="y-row">
+          <ion-col>y:{{item.gyroscope.y}}</ion-col>
+          <ion-col>Δy:{{item.gyroscope_variation.y}}</ion-col>
+        </ion-row>
+        <ion-row id="z-row">
+          <ion-col>z:{{item.gyroscope.z}}</ion-col>
+          <ion-col>Δz:{{item.gyroscope_variation.z}}</ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+
+
+    <div class="spacer" style="width:300px;height:19px;" id="cadastro3-spacer8"></div>
+
+
+  </ion-list>
+  <!-- </ion-card> -->
 </ion-content>

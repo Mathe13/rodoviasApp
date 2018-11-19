@@ -138,15 +138,19 @@ export class PrincipalPage {
                 }
 
               } else {
-                /*
+
                 let deltaT = ((Date.now() - this.ultimo.tempo) / 1000)
                 console.log("deltat = ", deltaT)
                 console.log('distancia', (utils.haversineDistance(this.ultimo.location, tmp.location)))
                 tmp.speed = ((utils.haversineDistance(this.ultimo.location, tmp.location)) / deltaT)
                 console.log("deta speed", (tmp.speed - this.ultimo.speed))
-                tmp.acceleration = ((tmp.speed - this.ultimo.speed) / deltaT)*/
+                tmp.acceleration = ((tmp.speed - this.ultimo.speed) / deltaT)
+
+
+                /*
                 tmp.speed = 0
                 tmp.acceleration = 0
+                */
                 this.ultimo = {
                   location: {
                     lat: tmp.location.lat,
@@ -204,7 +208,7 @@ export class PrincipalPage {
       })
   }
   pushHistorico() {
-    this.navCtrl.push(HistoricoPage, { historico: this.acelerometer_historic })
+    this.navCtrl.push(HistoricoPage, { historico: this.registros })
   }
 
 
