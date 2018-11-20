@@ -2,6 +2,7 @@ import { PrincipalPage } from './../principal/principal';
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { MapaPage } from '../mapa/mapa';
+import { InstrucoesPage } from '../instrucoes/instrucoes';
 
 @Component({
     selector: 'page-inicio',
@@ -15,7 +16,9 @@ export class InicioPage {
 
 
     goToPainel() {
-        this.navCtrl.push(PrincipalPage)
+        this.navCtrl.push(InstrucoesPage)
+
+        // this.navCtrl.push(PrincipalPage)
     }
     goToMapa() {
         this.navCtrl.push(MapaPage)

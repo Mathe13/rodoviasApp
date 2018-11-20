@@ -12,6 +12,7 @@ import { Gyroscope, GyroscopeOrientation, GyroscopeOptions } from '@ionic-native
 import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device-motion';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Http } from '@angular/http'
+import { InstrucoesPage } from '../instrucoes/instrucoes';
 
 /**
  * Generated class for the InicioPage page.

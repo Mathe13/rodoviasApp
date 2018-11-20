@@ -20,6 +20,7 @@ import { HttpModule } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise'
 import { HistoricoPage } from '../pages/historico/historico';
+import { InstrucoesPage } from '../pages/instrucoes/instrucoes';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { HistoricoPage } from '../pages/historico/historico';
     ContactPage,
     PrincipalPage,
     HistoricoPage,
-    InicioPage
+    InicioPage,
+    InstrucoesPage
   ],
   imports: [
     BrowserModule,
@@ -42,7 +44,8 @@ import { HistoricoPage } from '../pages/historico/historico';
     ContactPage,
     PrincipalPage,
     HistoricoPage,
-    InicioPage
+    InicioPage,
+    InstrucoesPage
   ],
   providers: [
     StatusBar,
