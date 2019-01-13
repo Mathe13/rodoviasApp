@@ -15,6 +15,7 @@ export class InicioPage {
     }
 
 
+
     goToPainel() {
         this.navCtrl.push(InstrucoesPage)
 
