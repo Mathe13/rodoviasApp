@@ -6,7 +6,6 @@ import { MyApp } from './app.component';
 import { MapaPage } from '../pages/mapa/mapa';
 import { ContactPage } from '../pages/contact/contact';
 import { PrincipalPage } from './../pages/principal/principal';
-import { InicioPage } from './../pages/inicio/inicio';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -21,6 +20,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise'
 import { HistoricoPage } from '../pages/historico/historico';
 import { InstrucoesPage } from '../pages/instrucoes/instrucoes';
+import { ColetaPage } from '../pages/coleta/coleta';
 
 @NgModule({
   declarations: [
@@ -29,7 +29,8 @@ import { InstrucoesPage } from '../pages/instrucoes/instrucoes';
     ContactPage,
     PrincipalPage,
     HistoricoPage,
-    InicioPage,
+    PrincipalPage,
+    ColetaPage,
     InstrucoesPage
   ],
   imports: [
@@ -44,7 +45,8 @@ import { InstrucoesPage } from '../pages/instrucoes/instrucoes';
     ContactPage,
     PrincipalPage,
     HistoricoPage,
-    InicioPage,
+    PrincipalPage,
+    ColetaPage,
     InstrucoesPage
   ],
   providers: [

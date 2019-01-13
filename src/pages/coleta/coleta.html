@@ -1,0 +1,118 @@
+<!--
+  Generated template for the InicioPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Painel</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding style="background-color: #e8e8e8">
+  <ion-card class="cartao-redondo">
+    <ion-card-header>
+      Status:<b *ngIf="status">Coletando</b><b *ngIf="!status">Desativado</b>
+    </ion-card-header>
+
+    <ion-card-content>
+      <!-- <ion-item> -->
+      <!-- <ion-label>Tamanho do trecho</ion-label> -->
+      <!-- <ion-select [(ngModel)]="comprimento" multiple="false">
+          <ion-option value="50">50 metros</ion-option>
+          <ion-option value="100">100 metros</ion-option>
+          <ion-option value="200">200 metros</ion-option>
+          <ion-option value="500">500 metros</ion-option>
+
+        </ion-select> -->
+      <!-- </ion-item> -->
+      <button ion-button color="danger" full round (click)="stop()" *ngIf="status">Cancelar</button>
+      <button ion-button color="secondary" full round (click)="start()" *ngIf="!status">Iniciar</button>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="cartao-redondo">
+    <ion-card-header>Gps</ion-card-header>
+    <ion-card-content>
+      <ion-row>
+        <ion-col>Endereço:{{addr}}</ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>lat:{{mostra.location.lat}}</ion-col>
+        <ion-col>lng:{{mostra.location.lng}}</ion-col>
+      </ion-row>
+    </ion-card-content>
+    <ion-row>
+      <ion-col>
+        <button ion-button icon-start clear small (click)="pushMapa()">
+          <ion-icon name="map"></ion-icon>
+          <div>Mapa</div>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+
+  <ion-card class="cartao-redondo">
+    <ion-card-header>
+      Acelerômetro
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-row id="x-row">
+        <ion-col>x:{{mostra.accelerometer.x}}</ion-col>
+        <ion-col>Δx:{{mostra.accelerometer_variation.x}}</ion-col>
+      </ion-row>
+      <ion-row id="y-row">
+        <ion-col>y:{{mostra.accelerometer.y}}</ion-col>
+        <ion-col>Δy:{{mostra.accelerometer_variation.y}}</ion-col>
+      </ion-row>
+      <ion-row id="z-row">
+        <ion-col>z:{{mostra.accelerometer.z}}</ion-col>
+        <ion-col>Δz:{{mostra.accelerometer_variation.z}}</ion-col>
+      </ion-row>
+    </ion-card-content>
+    <ion-row>
+      <ion-col>
+        <button ion-button icon-start clear small (click)="pushHistorico()">
+          <ion-icon name="list-box"></ion-icon>
+          <div>Histórico</div>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+
+
+  <ion-card class="cartao-redondo">
+    <ion-card-header>
+      Giroscópio
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-row id="x-row">
+        <ion-col>x:{{mostra.gyroscope.x}}</ion-col>
+        <ion-col>Δx:{{mostra.gyroscope_variation.x}}</ion-col>
+      </ion-row>
+      <ion-row id="y-row">
+        <ion-col>y:{{mostra.gyroscope.y}}</ion-col>
+        <ion-col>Δy:{{mostra.gyroscope_variation.y}}</ion-col>
+      </ion-row>
+      <ion-row id="z-row">
+        <ion-col>z:{{mostra.gyroscope.z}}</ion-col>
+        <ion-col>Δz:{{mostra.gyroscope_variation.z}}</ion-col>
+      </ion-row>
+    </ion-card-content>
+    <ion-row>
+      <ion-col>
+        <button ion-button icon-start clear small (click)="pushHistorico()">
+          <ion-icon name="list-box"></ion-icon>
+          <div>Histórico</div>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+
+</ion-content>
