@@ -21,6 +21,7 @@ import 'rxjs/add/operator/toPromise'
 import { HistoricoPage } from '../pages/historico/historico';
 import { InstrucoesPage } from '../pages/instrucoes/instrucoes';
 import { ColetaPage } from '../pages/coleta/coleta';
+import { InicioPage } from '../pages/inicio/inicio';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ColetaPage } from '../pages/coleta/coleta';
     HistoricoPage,
     PrincipalPage,
     ColetaPage,
+    InicioPage,
     InstrucoesPage
   ],
   imports: [
@@ -47,6 +49,7 @@ import { ColetaPage } from '../pages/coleta/coleta';
     HistoricoPage,
     PrincipalPage,
     ColetaPage,
+    InicioPage,
     InstrucoesPage
   ],
   providers: [
