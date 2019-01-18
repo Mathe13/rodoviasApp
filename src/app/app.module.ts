@@ -22,6 +22,8 @@ import { HistoricoPage } from '../pages/historico/historico';
 import { InstrucoesPage } from '../pages/instrucoes/instrucoes';
 import { ColetaPage } from '../pages/coleta/coleta';
 import { InicioPage } from '../pages/inicio/inicio';
+import { LoginPage } from '../pages/login/login';
+import { BrMaskerModule } from 'brmasker-ionic-3';
 
 @NgModule({
   declarations: [
@@ -33,11 +35,13 @@ import { InicioPage } from '../pages/inicio/inicio';
     PrincipalPage,
     ColetaPage,
     InicioPage,
+    LoginPage,
     InstrucoesPage
   ],
   imports: [
     BrowserModule,
     HttpModule,
+    BrMaskerModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -50,6 +54,7 @@ import { InicioPage } from '../pages/inicio/inicio';
     PrincipalPage,
     ColetaPage,
     InicioPage,
+    LoginPage,
     InstrucoesPage
   ],
   providers: [
