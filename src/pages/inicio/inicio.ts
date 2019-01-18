@@ -1,6 +1,6 @@
 
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, MenuController } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { StatusBar } from '@ionic-native/status-bar';
 import { LoginPage } from '../login/login';
@@ -14,8 +14,10 @@ export class InicioPage {
     public navCtrl: NavController,
     public _http: Http,
     public statusBar: StatusBar,
+    public menuCtrl: MenuController
   ) {
     statusBar.backgroundColorByHexString('#009fc1');
+    this.menuCtrl.enable(false, 'myMenu')
   }
   goToSignup(params) {
     if (!params) params = {};

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, MenuController } from 'ionic-angular';
 import { MapaPage } from '../mapa/mapa';
 import { InstrucoesPage } from '../instrucoes/instrucoes';
 
@@ -9,8 +9,10 @@ import { InstrucoesPage } from '../instrucoes/instrucoes';
 })
 export class PrincipalPage {
 
-    constructor(public navCtrl: NavController) {
-
+    constructor(
+        public navCtrl: NavController,
+        public menuCtrl: MenuController) {
+        this.menuCtrl.enable(true, "myMenu")
     }
 
 

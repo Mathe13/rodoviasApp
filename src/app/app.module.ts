@@ -6,23 +6,24 @@ import { MyApp } from './app.component';
 import { MapaPage } from '../pages/mapa/mapa';
 import { ContactPage } from '../pages/contact/contact';
 import { PrincipalPage } from './../pages/principal/principal';
+import { InstrucoesPage } from '../pages/instrucoes/instrucoes';
+import { HistoricoPage } from '../pages/historico/historico';
+import { ColetaPage } from '../pages/coleta/coleta';
+import { InicioPage } from '../pages/inicio/inicio';
+import { LoginPage } from '../pages/login/login';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 //importados
+import { IonicStorageModule } from '@ionic/storage';
 import { Gyroscope } from '@ionic-native/gyroscope';
 import { Geolocation } from '@ionic-native/geolocation';
 import { DeviceMotion } from '@ionic-native/device-motion';
 import { HttpModule } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise'
-import { HistoricoPage } from '../pages/historico/historico';
-import { InstrucoesPage } from '../pages/instrucoes/instrucoes';
-import { ColetaPage } from '../pages/coleta/coleta';
-import { InicioPage } from '../pages/inicio/inicio';
-import { LoginPage } from '../pages/login/login';
 import { BrMaskerModule } from 'brmasker-ionic-3';
 
 @NgModule({
@@ -42,6 +43,7 @@ import { BrMaskerModule } from 'brmasker-ionic-3';
     BrowserModule,
     HttpModule,
     BrMaskerModule,
+    IonicStorageModule.forRoot(),
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
