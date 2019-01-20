@@ -4,6 +4,7 @@ import { NavController, MenuController } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { StatusBar } from '@ionic-native/status-bar';
 import { LoginPage } from '../login/login';
+import { CadastroPage } from '../cadastro/cadastro';
 
 @Component({
   selector: 'page-inicio',
@@ -21,6 +22,7 @@ export class InicioPage {
   }
   goToSignup(params) {
     if (!params) params = {};
+    this.navCtrl.push(CadastroPage)
   }
   goToLogin(params) {
     if (!params) params = {};

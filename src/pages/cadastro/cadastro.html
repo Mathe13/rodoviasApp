@@ -1,0 +1,62 @@
+<ion-content padding id="page1">
+    <ion-icon name="md-arrow-round-back" style="position: absolute;" on-click="goToInicio()"></ion-icon>
+    <!-- slider -->
+    <!-- 
+    <ion-slides loop=true autoplay=1000 speed=2000 class="slide">
+        <ion-slide class="slide">
+            <ion-item>
+                <img src="assets/imgs/logos/logo_uergs.png" alt="">
+            </ion-item>
+        </ion-slide>
+        <ion-slide class="slide">
+            <ion-item>
+                <img src="assets/imgs/logos/logo_nottingham.jpg" alt="">
+            </ion-item>
+        </ion-slide>
+        <ion-slide class="slide">
+            <ion-item>
+                <img src="assets/imgs/logos/logo_lapav.png" alt="">
+            </ion-item>
+        </ion-slide>
+    </ion-slides> -->
+
+    <p style="margin:4px;font-size:13px;color:#272727;margin-left: 35px">O App das rodovias</p>
+    <div class="spacer" style="width:300px;height:60px;" id="cadastro1-spacer1"></div>
+    <h2 id="signup-heading2" style="color:#272727;">
+        Cadastro
+    </h2>
+    <div id="cadastro2-markdown3" class="show-list-numbers-and-dots">
+        <p style="color:#353535;">
+            Criar uma nova conta
+            <!-- <br /> <b>{{user.email}}</b> -->
+        </p>
+    </div>
+    <div class="spacer" style="width:300px;height:30px;" id="cadastro2-spacer2"></div>
+    <form #f="ngForm" id="cadastro2-form2">
+
+
+        <ion-input required [(ngModel)]="user.nome" type="text" name="nome" placeholder="Nome Completo" value="" style="margin-bottom: 10px;height: 44px;border: 1px solid #c3c3c3;border-radius: 7px;width: 100%;font-size:14px;padding-left:10px;padding-top: 2px"></ion-input>
+
+        <ion-input required [(ngModel)]="user.senha" type="password" name="senha" placeholder="Senha" value="" style="margin-bottom: 10px;height: 44px;border: 1px solid #c3c3c3;border-radius: 7px;width: 100%;font-size:14px;padding-left:10px;padding-top: 2px"></ion-input>
+
+        <div class="spacer" style="width:300px;height:9px;" id="cadastro2-spacer6"></div>
+
+        <ion-input id='email' [(ngModel)]="user.email" type="email" name="email" value="" placeholder="E-mail" style="margin-bottom: 10px;height: 44px;border: 1px solid #c3c3c3;border-radius: 7px;width: 100%;font-size:14px;padding-left:10px;padding-top: 2px"></ion-input>
+
+        <div class="spacer" style="width:300px;height:9px;" id="cadastro2-spacer7"></div>
+
+
+        <ion-input id='celular' [(ngModel)]="user.celular" required type="tel" name="celular" [brmasker]="{mask:'(00) 00000-0000', len:15}"
+            value="" placeholder="Celular" style="margin-bottom: 10px;height: 44px;border: 1px solid #c3c3c3;border-radius: 7px;width: 100%;font-size:14px;padding-left:10px;padding-top: 2px"></ion-input>
+
+
+    </form>
+    <button style="float:left; margin-top:10px;margin-botton:10px" id="cadastro" *ngIf="f.valid" ion-button color="primary"
+        block on-click="cadastrar()">
+        Cadastrar
+    </button>
+    <button style="float:left; margin-top:10px;margin-botton:10px" id="cadastro3" *ngIf="!f.valid" ion-button color="danger"
+        block on-click="erro()">
+        Avançar
+    </button>
+</ion-content>
