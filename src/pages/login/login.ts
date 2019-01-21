@@ -1,6 +1,6 @@
 
 import { Component } from '@angular/core';
-import { NavController, AlertController } from 'ionic-angular';
+import { NavController, AlertController, Events } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { StatusBar } from '@ionic-native/status-bar';
 import { base_url } from '../../app/config';
@@ -21,7 +21,8 @@ export class LoginPage {
     public _http: Http,
     public statusBar: StatusBar,
     public alertCtrl: AlertController,
-    public _storage: Storage
+    public _storage: Storage,
+    public events: Events
   ) {
     statusBar.backgroundColorByHexString('#009fc1');
   }
@@ -46,6 +47,7 @@ export class LoginPage {
         console.log('status', result.status)
         if (result.status == "Sucesso") {
           console.log('logou')
+          this.events.publish('user:set', result.user)
           this._storage.set('user', result.user)
           this.navCtrl.setRoot(PrincipalPage)
         } else {

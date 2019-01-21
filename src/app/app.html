@@ -11,10 +11,12 @@
                         </div>
                     </ion-col>
                     <ion-col padding-top col-8>
+                        <!-- <h2 ion-text *ngIf="!user.nome" class="no-margin bold text-white">
+                            name
+                        </h2> -->
                         <h2 ion-text class="no-margin bold text-white">
-                            João Firmino
+                            {{user.nome}}
                         </h2>
-                        <span ion-text color="light">Customer</span>
                     </ion-col>
                 </ion-row>
 
