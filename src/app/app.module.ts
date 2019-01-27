@@ -26,6 +26,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise'
 import { BrMaskerModule } from 'brmasker-ionic-3';
 import { CadastroPage } from '../pages/cadastro/cadastro';
+import { PerfilPage } from '../pages/perfil/perfil';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { CadastroPage } from '../pages/cadastro/cadastro';
     InicioPage,
     LoginPage,
     InstrucoesPage,
-    CadastroPage
+    CadastroPage,
+    PerfilPage
   ],
   imports: [
     BrowserModule,
@@ -60,7 +62,8 @@ import { CadastroPage } from '../pages/cadastro/cadastro';
     InicioPage,
     LoginPage,
     InstrucoesPage,
-    CadastroPage
+    CadastroPage,
+    PerfilPage
   ],
   providers: [
     StatusBar,

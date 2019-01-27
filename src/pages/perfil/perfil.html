@@ -1,0 +1,102 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>
+            Editar Perfil
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding id="page10" parallax-header no-bounce class="bg-modal" style="height: 100%!important;">
+    <!-- slider -->
+
+
+    <div class="main-content" text-wrap text-center>
+        <div class="circular">
+
+            <ion-slides loop=true autoplay=1000 speed=2000 class="slide" style="    margin-top: -20%;">
+                <ion-slide class="slide">
+                    <ion-item>
+                        <img src="assets/imgs/logos/logo_uergs.png" alt="">
+                    </ion-item>
+                </ion-slide>
+                <ion-slide class="slide">
+                    <ion-item>
+                        <img src="assets/imgs/logos/logo_nottingham.jpg" alt="">
+                    </ion-item>
+                </ion-slide>
+                <ion-slide class="slide">
+                    <ion-item>
+                        <img src="assets/imgs/logos/logo_lapav.png" alt="">
+                    </ion-item>
+                </ion-slide>
+            </ion-slides>
+        </div>
+
+
+
+
+
+
+        <div class="spacer" style="width:300px;height:30px;" id="cadastro2-spacer2"></div>
+        <form #f="ngForm" id="cadastro2-form2" style="margin-top: 10%;">
+
+            <ion-item>
+
+                <ion-label>
+                    Nome:
+                </ion-label>
+                <ion-input required [(ngModel)]="user.nome" type="text" name="nome" placeholder="Nome Completo" value=""></ion-input>
+            </ion-item>
+
+
+            <div class="spacer" style="width:300px;height:9px;" id="cadastro2-spacer6"></div>
+            <ion-item>
+
+                <ion-label>
+                    email:
+                </ion-label>
+                <ion-input id='email' [(ngModel)]="user.email" type="email" name="email" value="" placeholder="E-mail"></ion-input>
+            </ion-item>
+
+            <div class="spacer" style="width:300px;height:9px;" id="cadastro2-spacer7"></div>
+
+            <ion-item>
+                <ion-label>
+                    Celular:
+                </ion-label>
+                <ion-input id='celular' [(ngModel)]="user.celular" required type="tel" name="celular" [brmasker]="{mask:'(00) 00000-0000', len:15}"
+                    value="" placeholder="Celular"></ion-input>
+            </ion-item>
+
+            <div class="spacer" style="width:300px;height:9px;" id="cadastro2-spacer7"></div>
+
+            <!-- <div id="div_senha" style="display: none"> -->
+            <ion-item>
+                <ion-label>
+                    Senha:
+                </ion-label>
+                <ion-input id='senha1' [(ngModel)]="user.celular" required type="password" name="senha" placeholder="Celular"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label>
+                    Confirme:
+                </ion-label>
+                <ion-input id='senha2' [(ngModel)]="senha2" required type="password" name="senha" value="" placeholder="Celular"></ion-input>
+            </ion-item>
+            <!-- </div> -->
+
+
+            <button style="float:left; margin-top:10px;margin-botton:10px" id="cadastro" *ngIf="f.valid" ion-button
+                color="primary" block on-click="atualizar()">
+                Atualizar
+            </button>
+            <button style="float:left; margin-top:10px;margin-botton:10px" id="cadastro3" *ngIf="!f.valid" ion-button
+                color="danger" block on-click="erro()">
+                Avançar
+            </button>
+        </form>
+    </div>
+</ion-content>

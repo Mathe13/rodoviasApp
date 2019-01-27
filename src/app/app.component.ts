@@ -1,10 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, Nav, Events } from 'ionic-angular';
+import { Platform, Nav, Events, AlertController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { InicioPage } from '../pages/inicio/inicio';
 import { Storage } from '@ionic/storage';
 import { PrincipalPage } from '../pages/principal/principal';
+import { PerfilPage } from '../pages/perfil/perfil';
 
 @Component({
   templateUrl: 'app.html'
@@ -17,7 +18,8 @@ export class MyApp {
     statusBar: StatusBar,
     splashScreen: SplashScreen,
     public _storage: Storage,
-    public events: Events
+    public events: Events,
+    public alertCtrl: AlertController
   ) {
     platform.ready().then(() => {
       statusBar.styleDefault();
@@ -31,6 +33,7 @@ export class MyApp {
       this.user = retorno
     });
   }
+
   logout() {
     this._storage.remove('user').then(() => {
       this.navCtrl.setRoot(InicioPage)
@@ -47,6 +50,22 @@ export class MyApp {
       }
     }).catch(err => {
       console.log(err)
+    })
+  }
+
+  goToPerfil() {
+    this._storage.get('user').then(user => {
+      this.navCtrl.push(PerfilPage, { 'user': user })
+    }).catch(err => {
+      console.log(err);
+
+      this.alertCtrl.create({
+        title: "Erro",
+        subTitle: "Faça login",
+        buttons: [{ text: "ok" }]
+      }).present();
+      this.navCtrl.popAll()
+      this.navCtrl.setRoot(InicioPage)
     })
   }
 }

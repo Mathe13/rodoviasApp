@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { PrincipalPage } from '../principal/principal';
+import { ColetaPage } from '../coleta/coleta';
 
 @Component({
   selector: 'page-instrucoes',
@@ -12,15 +12,16 @@ export class InstrucoesPage {
   }
 
   ionViewDidEnter() {
-      console.log('ionViewDidLoad InstrucoesPage');
+    console.log('ionViewDidLoad InstrucoesPage');
   }
-          
-  close(){
+
+  close() {
     console.log('vai dar pop');
     // this.navCtrl.setRoot(CursosPage)
     // this.appCtrl.getRootNav().push(TabsPage)
-    this.navCtrl.pop();
-    this.navCtrl.push(PrincipalPage);
+    this.navCtrl.pop().then(() => {
+      this.navCtrl.push(ColetaPage);
+    })
     // this.navCtrl.setRoot(DisponiveisPage)    
     // this.navCtrl.pop();
   }
