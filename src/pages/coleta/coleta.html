@@ -21,22 +21,44 @@
     </ion-card-header>
 
     <ion-card-content>
-      <!-- <ion-item> -->
-      <!-- <ion-label>Tamanho do trecho</ion-label> -->
-      <!-- <ion-select [(ngModel)]="comprimento" multiple="false">
-          <ion-option value="50">50 metros</ion-option>
-          <ion-option value="100">100 metros</ion-option>
-          <ion-option value="200">200 metros</ion-option>
-          <ion-option value="500">500 metros</ion-option>
+      <button ion-button color="danger" full round (click)="stop()" *ngIf="status ">Cancelar</button>
+      <button ion-button color="secondary" full round (click)="abreQuiz()" *ngIf="!status && !quiz">Iniciar</button>
 
-        </ion-select> -->
-      <!-- </ion-item> -->
-      <button ion-button color="danger" full round (click)="stop()" *ngIf="status">Cancelar</button>
-      <button ion-button color="secondary" full round (click)="start()" *ngIf="!status">Iniciar</button>
+      <div class="quiz cartao-redondo" *ngIf="quiz" text-wrap text-center>
+
+        <h5 style="float: left;margin-top: -5%;">Responda</h5>
+        <ion-item>
+
+          <ion-label for="veiculo">Tipo de veiculo</ion-label>
+          <ion-select id="veiculo" [(ngModel)]="veiculo" multiple="false">
+            <ng-template ngFor let-v [ngForOf]="veiculos">
+              <ion-option value={{v.id}}>{{v.nome}}</ion-option>
+            </ng-template>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+
+          <ion-label for="rodovia">Rodovia</ion-label>
+          <ion-input required [(ngModel)]="rodovia" type="text" name="rodovia" placeholder="rodovia" value=""></ion-input>
+        </ion-item>
+        <ion-item>
+
+          <ion-label for="faixa">Faixa</ion-label>
+          <ion-input required [(ngModel)]="faixa" type="text" name="faixa" placeholder="esquerda/direita" value=""></ion-input>
+        </ion-item>
+        <ion-item>
+
+          <ion-label for="rodovia">Anotações</ion-label>
+          <ion-textarea required [(ngModel)]="anotacoes" type="text" name="anotacoes" placeholder="anotacoes" value=""></ion-textarea>
+        </ion-item>
+
+        <button ion-button color="secondary" full round (click)="create_trajeto()">Iniciar</button>
+      </div>
+
     </ion-card-content>
   </ion-card>
 
-  <ion-card class="cartao-redondo">
+  <!-- <ion-card class="cartao-redondo">
     <ion-card-header>Gps</ion-card-header>
     <ion-card-content>
       <ion-row>
@@ -114,6 +136,6 @@
         </button>
       </ion-col>
     </ion-row>
-  </ion-card>
+  </ion-card> -->
 
 </ion-content>
