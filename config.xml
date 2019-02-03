@@ -91,7 +91,7 @@
     <plugin name="cordova-plugin-device-motion" spec="^2.0.1" />
     <plugin name="cordova-plugin-gyroscope" spec="^0.1.4" />
     <allow-navigation href="http://192.168.1.10:8100" />
+    <plugin name="cordova-sqlite-storage" spec="2.6.0" />
     <engine name="browser" spec="5.0.4" />
     <engine name="android" spec="7.0.0" />
-    <plugin name="cordova-sqlite-storage" spec="2.6.0" />
 </widget>

@@ -2,11 +2,11 @@ import { utils } from '../../app/utils';
 import { registro, dados, location } from '../../app/types';
 import { HistoricoPage } from '../historico/historico';
 import { base_url, sensorInterval } from '../../app/config';
+import { Gyroscope, GyroscopeOrientation, GyroscopeOptions } from '@ionic-native/gyroscope';
 import { MapaPage } from '../mapa/mapa';
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { Headers } from '@angular/http';
-import { Gyroscope, GyroscopeOrientation, GyroscopeOptions } from '@ionic-native/gyroscope';
 
 
 import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device-motion';
@@ -15,13 +15,9 @@ import { Http } from '@angular/http'
 import { Storage } from '@ionic/storage';
 import { InicioPage } from '../inicio/inicio';
 import { User_data } from '../../app/models/user';
+import { sensores } from './sensores';
 
-/**
- * Generated class for the InicioPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+
 
 // @IonicPage()
 @Component({
@@ -32,14 +28,19 @@ export class ColetaPage {
   //variaveis
   quiz = false
   aviso = false
-  status = false
   faixa = ''
   rodovia = ""
   veiculo = 1
   veiculos = [{ id: 1, nome: "" }]
   user: User_data
   anotacoes = ''
+
+  //pra exibição
+  status = false
   trajeto = {}
+  acelerometro = []
+  gps = [{ lat: '', lng: '' }]
+  giroscopio = []
 
 
   constructor(public navCtrl: NavController,
@@ -47,9 +48,11 @@ export class ColetaPage {
     private deviceMotion: DeviceMotion,
     private geolocation: Geolocation,
     private _http: Http,
-    private alertCtrl: AlertController,
     private _storage: Storage,
-    private gyroscope: Gyroscope) {
+    private alertCtrl: AlertController,
+    private gyroscope: Gyroscope,
+    // private sensores: sensores
+  ) {
     this._storage.get('user').then(user => {
       this.user = user
     }).catch(err => {
@@ -67,6 +70,29 @@ export class ColetaPage {
 
   }
 
+  // mostra(alvo) {
+  //   if (alvo == 'acelerometro') {
+  //     if (this.acelerometro.length == 0) {
+  //       return { x: 0, y: 0, z: 0 }
+  //     } else {
+  //       return this.acelerometro[this.acelerometro.length - 1]
+  //     }
+  //   } else if (alvo == 'giroscopio') {
+  //     if (this.giroscopio.length == 0) {
+  //       return { x: 0, y: 0, z: 0 }
+  //     } else {
+  //       return this.giroscopio[this.giroscopio.length - 1]
+  //     }
+  //   }
+  //   else if (alvo == 'gps') {
+  //     if (this.gps.length == 0) {
+  //       return { lat: 0, lng: 0 }
+  //     } else {
+  //       return this.gps[this.gps.length - 1]
+  //     }
+  //   }
+  // }
+
   abreQuiz() {
     this.quiz = true
   }
@@ -75,6 +101,7 @@ export class ColetaPage {
     this.consulta_veiculos();
     this.get_rodovia_name()
   }
+
   create_trajeto() {
     let payload = {
       user_id: this.user.id,
@@ -115,9 +142,79 @@ export class ColetaPage {
         }
       })
   }
-  disparaLeituras(path_id) {
-
+  async disparaLeituras(path_id) {
+    this.status = true;
+    this.leitor_acelerometro(path_id)
+    this.leitor_gps(path_id)
+    this.leitor_giroscopio(path_id)
   }
+
+  leitor_acelerometro(path_id) {
+    var subscription = this.deviceMotion.watchAcceleration({ frequency: 1000 })
+      .subscribe((acceleration: DeviceMotionAccelerationData) => {
+        console.log(acceleration);
+        let payload = {
+          trajeto_id: path_id,
+          x: acceleration.x,
+          y: acceleration.y,
+          z: acceleration.z
+        }
+        this.envia_dados('/acelerometro', payload)
+        if (this.status == false) {
+          subscription.unsubscribe()
+        }
+      });
+  }
+  leitor_gps(path_id) {
+    let subscription = this.geolocation.watchPosition({ enableHighAccuracy: true })
+      .subscribe((data) => {
+        if (data.coords !== undefined) {
+          let payload = {
+            trajeto_id: path_id,
+            lat: data.coords.latitude,
+            lng: data.coords.longitude,
+            velocidade: data.coords.speed,
+            altitude: data.coords.altitude,
+            precisao_loc: data.coords.accuracy,
+            precisao_alt: data.coords.altitudeAccuracy
+          }
+          console.log('gps', payload);
+          this.envia_dados('/gps', payload)
+          if (this.status == false) {
+            subscription.unsubscribe()
+          }
+        }
+      });
+  }
+  leitor_giroscopio(path_id) {
+    let subscription = this.gyroscope.watch({ frequency: 1000 })
+      .subscribe((orientation: GyroscopeOrientation) => {
+        console.log('gyroscope', orientation.x, orientation.y, orientation.z, orientation.timestamp);
+        let payload = {
+          x: orientation.x,
+          y: orientation.y,
+          z: orientation.z,
+          trajeto_id: path_id
+        }
+        this.envia_dados('/giroscopio', payload)
+        if (this.status == false) {
+          subscription.unsubscribe()
+        }
+      });
+  }
+
+  async envia_dados(sensor, payload) {
+    this._http.post(base_url + sensor, payload)
+      .toPromise()
+      .then(() => { console.log('enviei:' + sensor) })
+      .catch((err) => {
+        console.log('erro ao envia:' + sensor + "\n erro:" + String(err))
+        this.envia_dados(sensor, payload)
+      })
+  }
+
+
+
   consulta_veiculos() {
     this._http.get(base_url + '/path/tipo_veiculo')
       .map(res => res.json())
@@ -135,6 +232,7 @@ export class ColetaPage {
   pushMapa() {
     this.navCtrl.push(MapaPage)
   }
+
 
 
 

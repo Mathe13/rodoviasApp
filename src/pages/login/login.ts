@@ -40,7 +40,7 @@ export class LoginPage {
     }
     let url = base_url + '/user/login?celular=' + this.usuario.celular + "&senha=" + this.usuario.senha;
     console.log(url)
-    this._http.get(base_url + '/user/login?celular=' + this.usuario.celular + "&senha=" + this.usuario.senha)
+    this._http.get(url)
       .map(res => res.json())
       .toPromise()
       .then((result) => {
@@ -60,6 +60,11 @@ export class LoginPage {
       }).catch((err) => {
         console.log("cai no erro")
         console.log(err)
+        this.alertCtrl.create({
+          title: "Erro",
+          subTitle: String(err),
+          buttons: [{ text: 'ok' }]
+        }).present();
 
       });
   }
