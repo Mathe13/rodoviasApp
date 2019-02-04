@@ -39,7 +39,7 @@ export class ColetaPage {
   status = false
   trajeto = {}
   acelerometro = []
-  gps = [{ lat: '', lng: '' }]
+  gps = []
   giroscopio = []
 
 
@@ -69,29 +69,12 @@ export class ColetaPage {
     })
 
   }
+  stop() {
+    this.status = false
+  }
+  async  encerrar_trajeto() {
 
-  // mostra(alvo) {
-  //   if (alvo == 'acelerometro') {
-  //     if (this.acelerometro.length == 0) {
-  //       return { x: 0, y: 0, z: 0 }
-  //     } else {
-  //       return this.acelerometro[this.acelerometro.length - 1]
-  //     }
-  //   } else if (alvo == 'giroscopio') {
-  //     if (this.giroscopio.length == 0) {
-  //       return { x: 0, y: 0, z: 0 }
-  //     } else {
-  //       return this.giroscopio[this.giroscopio.length - 1]
-  //     }
-  //   }
-  //   else if (alvo == 'gps') {
-  //     if (this.gps.length == 0) {
-  //       return { lat: 0, lng: 0 }
-  //     } else {
-  //       return this.gps[this.gps.length - 1]
-  //     }
-  //   }
-  // }
+  }
 
   abreQuiz() {
     this.quiz = true
@@ -157,8 +140,10 @@ export class ColetaPage {
           trajeto_id: path_id,
           x: acceleration.x,
           y: acceleration.y,
-          z: acceleration.z
+          z: acceleration.z,
+          datahora: new Date()
         }
+        this.acelerometro.push(payload)
         this.envia_dados('/acelerometro', payload)
         if (this.status == false) {
           subscription.unsubscribe()
@@ -176,9 +161,11 @@ export class ColetaPage {
             velocidade: data.coords.speed,
             altitude: data.coords.altitude,
             precisao_loc: data.coords.accuracy,
-            precisao_alt: data.coords.altitudeAccuracy
+            precisao_alt: data.coords.altitudeAccuracy,
+            datahora: new Date()
           }
           console.log('gps', payload);
+          this.gps.push(payload)
           this.envia_dados('/gps', payload)
           if (this.status == false) {
             subscription.unsubscribe()
@@ -194,8 +181,10 @@ export class ColetaPage {
           x: orientation.x,
           y: orientation.y,
           z: orientation.z,
-          trajeto_id: path_id
+          trajeto_id: path_id,
+          datahora: new Date()
         }
+        this.giroscopio.push(payload)
         this.envia_dados('/giroscopio', payload)
         if (this.status == false) {
           subscription.unsubscribe()

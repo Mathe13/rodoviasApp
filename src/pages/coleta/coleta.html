@@ -62,6 +62,19 @@
 
 
   <div id="coleta-mode">
+
+    <ion-card class="cartao-redondo" *ngIf="status">
+      <ion-card-header>
+        Status:<b *ngIf="status">Coletando</b><b *ngIf="!status">Desativado</b>
+      </ion-card-header>
+
+      <ion-card-content>
+        <button ion-button color="danger" full round (click)="stop()">Cancelar</button>
+      </ion-card-content>
+    </ion-card>
+
+
+
     <ion-card class="cartao-redondo">
       <ion-card-header>Gps</ion-card-header>
       <ion-card-content>
