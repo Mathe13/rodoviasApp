@@ -1,12 +1,8 @@
-import { utils } from '../../app/utils';
-import { registro, dados, location } from '../../app/types';
-import { HistoricoPage } from '../historico/historico';
 import { base_url, sensorInterval } from '../../app/config';
 import { Gyroscope, GyroscopeOrientation, GyroscopeOptions } from '@ionic-native/gyroscope';
 import { MapaPage } from '../mapa/mapa';
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, Button, LoadingController } from 'ionic-angular';
-import { Headers } from '@angular/http';
+import { NavController, NavParams, AlertController, Button, LoadingController, Platform } from 'ionic-angular';
 
 
 import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device-motion';
@@ -15,7 +11,6 @@ import { Http } from '@angular/http'
 import { Storage } from '@ionic/storage';
 import { InicioPage } from '../inicio/inicio';
 import { User_data } from '../../app/models/user';
-import { sensores } from './sensores';
 
 
 
@@ -51,7 +46,8 @@ export class ColetaPage {
     private _storage: Storage,
     private alertCtrl: AlertController,
     private gyroscope: Gyroscope,
-    private loadCtrl: LoadingController
+    private loadCtrl: LoadingController,
+    private Platform: Platform
     // private sensores: sensores
   ) {
 

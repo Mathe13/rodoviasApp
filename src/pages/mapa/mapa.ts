@@ -75,7 +75,7 @@ export class MapaPage {
     });
   }
   addBuracos() {
-    this._http.get(base_url + "oscilacao")
+    this._http.get(base_url + "/gps")
       .map(res => res.json())
       .toPromise()
       .then((res) => {
