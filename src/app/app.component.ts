@@ -6,6 +6,7 @@ import { InicioPage } from '../pages/inicio/inicio';
 import { Storage } from '@ionic/storage';
 import { PrincipalPage } from '../pages/principal/principal';
 import { PerfilPage } from '../pages/perfil/perfil';
+import { LeiturasPage } from '../pages/leituras/leituras';
 
 @Component({
   templateUrl: 'app.html'
@@ -52,7 +53,11 @@ export class MyApp {
       console.log(err)
     })
   }
-
+  LeiturasPage() {
+    this._storage.get('leituras').then(leituras => {
+      this.navCtrl.push(LeiturasPage, { data: leituras })
+    })
+  }
   goToPerfil() {
     this._storage.get('user').then(user => {
       this.navCtrl.push(PerfilPage, { 'user': user })

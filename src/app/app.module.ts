@@ -27,6 +27,7 @@ import 'rxjs/add/operator/toPromise'
 import { BrMaskerModule } from 'brmasker-ionic-3';
 import { CadastroPage } from '../pages/cadastro/cadastro';
 import { PerfilPage } from '../pages/perfil/perfil';
+import { LeiturasPage } from '../pages/leituras/leituras';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { PerfilPage } from '../pages/perfil/perfil';
     LoginPage,
     InstrucoesPage,
     CadastroPage,
-    PerfilPage
+    PerfilPage,
+    LeiturasPage
   ],
   imports: [
     BrowserModule,
@@ -63,7 +65,8 @@ import { PerfilPage } from '../pages/perfil/perfil';
     LoginPage,
     InstrucoesPage,
     CadastroPage,
-    PerfilPage
+    PerfilPage,
+    LeiturasPage
   ],
   providers: [
     StatusBar,

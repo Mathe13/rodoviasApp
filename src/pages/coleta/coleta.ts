@@ -5,7 +5,7 @@ import { base_url, sensorInterval } from '../../app/config';
 import { Gyroscope, GyroscopeOrientation, GyroscopeOptions } from '@ionic-native/gyroscope';
 import { MapaPage } from '../mapa/mapa';
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, Button, LoadingController } from 'ionic-angular';
 import { Headers } from '@angular/http';
 
 
@@ -51,8 +51,10 @@ export class ColetaPage {
     private _storage: Storage,
     private alertCtrl: AlertController,
     private gyroscope: Gyroscope,
+    private loadCtrl: LoadingController
     // private sensores: sensores
   ) {
+
     this._storage.get('user').then(user => {
       this.user = user
     }).catch(err => {
@@ -70,19 +72,46 @@ export class ColetaPage {
 
   }
   stop() {
-    this.status = false
+    this.alertCtrl.create({
+      title: 'Tem certeza?',
+      buttons: [
+        {
+          text: 'sim', handler: () => {
+            this.status = false
+            this.salva_leitura()
+          }
+        },
+        { text: 'não' }
+      ]
+    }).present()
   }
-  async  encerrar_trajeto() {
 
+
+  async salva_leitura() {
+    let path = this.trajeto
+    path['aceloremtro'] = this.acelerometro
+    path['giroscopio'] = this.giroscopio
+    path['gps'] = this.gps
+    this._storage.get('leituras').then(leituras => {
+      leituras.push(this.trajeto)
+      console.log(leituras)
+      this._storage.set('leituras', leituras)
+    }).catch(err => {
+      console.log(err)
+      this.salva_leitura()
+    })
   }
 
   abreQuiz() {
     this.quiz = true
   }
-  ionViewDidLoad() {
+  async ionViewDidLoad() {
+    let loader = this.loadCtrl.create({ content: 'carregando' })
+    loader.present()
     console.log('ionViewDidLoad InicioPage');
-    this.consulta_veiculos();
-    this.get_rodovia_name()
+    await this.consulta_veiculos();
+    await this.get_rodovia_name()
+    loader.dismiss()
   }
 
   create_trajeto() {
@@ -99,6 +128,8 @@ export class ColetaPage {
       .toPromise()
       .then(res => {
         console.log(res)
+        payload['id'] = res.insertId
+        console.log(payload)
         this.trajeto = payload;
         this.disparaLeituras(res.insertId)
       }).catch(err => {
@@ -141,7 +172,7 @@ export class ColetaPage {
           x: acceleration.x,
           y: acceleration.y,
           z: acceleration.z,
-          datahora: new Date()
+          datahora: new Date().toISOString()
         }
         this.acelerometro.push(payload)
         this.envia_dados('/acelerometro', payload)
@@ -162,7 +193,7 @@ export class ColetaPage {
             altitude: data.coords.altitude,
             precisao_loc: data.coords.accuracy,
             precisao_alt: data.coords.altitudeAccuracy,
-            datahora: new Date()
+            datahora: new Date().toISOString()
           }
           console.log('gps', payload);
           this.gps.push(payload)
@@ -182,7 +213,7 @@ export class ColetaPage {
           y: orientation.y,
           z: orientation.z,
           trajeto_id: path_id,
-          datahora: new Date()
+          datahora: new Date().toISOString()
         }
         this.giroscopio.push(payload)
         this.envia_dados('/giroscopio', payload)

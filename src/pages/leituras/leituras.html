@@ -1,0 +1,42 @@
+<ion-header>
+    <ion-navbar color="primary">
+
+        <ion-title>
+            Historico de leituras
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+
+
+<ion-content padding style="background-color: #e8e8e8">
+
+    <!-- <ng-template ngFor let-l [ngForOf]="data"> -->
+    <ion-item *ngFor="let d of data;">
+        <ion-card class="cartao-redondo">
+            <ion-card-header>
+                Id:{{d.id}} <br>
+                Data:{{d.hora_inicio}}
+                <br>
+                <button ion-button color="primary" full round (click)="ativa(d.id)" *ngIf="!verifica(d)">Exibir</button>
+                <button ion-button color="danger" full round (click)="desativa(d.id)" *ngIf=" verifica(d)">Recolher</button>
+            </ion-card-header>
+            <ion-card-content>
+
+                <div *ngIf="verifica(d)">
+                    <ion-row>
+                        <pre>
+                            <code>
+                                {{toString(d)}}
+                            </code>
+                        </pre>
+                    </ion-row>
+                </div>
+            </ion-card-content>
+
+        </ion-card>
+    </ion-item>
+    <!-- </ng-template> -->
+
+    <button ion-button color="danger" full round (click)="ApagarLeituras()">Limpar</button>
+
+</ion-content>
