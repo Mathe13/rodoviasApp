@@ -19,14 +19,16 @@
         <ion-card-content>
             <button ion-button color="secondary" full round (click)="goToPainel()">
                 <ion-icon name="arrow-dropright-circle">
-                    Coletar dados
+                    Iniciar Coleta
                 </ion-icon>
             </button><br>
-            <button ion-button color="secondary" full round (click)="goToMapa()">
-                <ion-icon name="map">
-                    Ver Mapa
-                </ion-icon>
-            </button>
+            <a href="{{site}}" target="_blank" style="text-decoration: none">
+                <button ion-button color="secondary" full round>
+                    <ion-icon name="globe">
+                        Acessar site
+                    </ion-icon>
+                </button>
+            </a>
         </ion-card-content>
     </ion-card>
 

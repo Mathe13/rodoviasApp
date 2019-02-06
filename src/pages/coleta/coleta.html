@@ -69,16 +69,16 @@
       </ion-card-header>
 
       <ion-card-content>
-        <button ion-button color="danger" full round (click)="stop()">Cancelar</button>
+        <button ion-button color="danger" full round (click)="stop()">Concluir</button>
       </ion-card-content>
     </ion-card>
 
 
 
-    <ion-card class="cartao-redondo">
+    <ion-card class="cartao-redondo" *ngIf='giroscopio.length>0'>
       <ion-card-header>Gps</ion-card-header>
       <ion-card-content>
-        <div *ngIf='giroscopio.length>0'>
+        <div>
 
           <!-- <ion-row>
             <ion-col>teste</ion-col>
@@ -99,13 +99,13 @@
       </ion-row> -->
     </ion-card>
 
-    <ion-card class="cartao-redondo">
+    <ion-card class="cartao-redondo" *ngIf='giroscopio.length>0'>
       <ion-card-header>
         Acelerômetro
       </ion-card-header>
 
       <ion-card-content>
-        <div *ngIf='giroscopio.length>0'>
+        <div>
 
           <ion-row id="x-row">
             <ion-col>x:{{acelerometro[acelerometro.length-1].x}}</ion-col>
@@ -132,13 +132,13 @@
     </ion-card>
 
 
-    <ion-card class="cartao-redondo">
+    <ion-card class="cartao-redondo" *ngIf='giroscopio.length>0'>
       <ion-card-header>
         Giroscópio
       </ion-card-header>
 
       <ion-card-content>
-        <div *ngIf='giroscopio.length>0'>
+        <div>
 
           <ion-row id="x-row">
             <ion-col>x:{{giroscopio[giroscopio.length-1].x}}</ion-col>

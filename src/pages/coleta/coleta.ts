@@ -1,4 +1,4 @@
-import { base_url, sensorInterval } from '../../app/config';
+import { base_url } from '../../app/config';
 import { Gyroscope, GyroscopeOrientation, GyroscopeOptions } from '@ionic-native/gyroscope';
 import { MapaPage } from '../mapa/mapa';
 import { Component } from '@angular/core';
@@ -113,7 +113,6 @@ export class ColetaPage {
   create_trajeto() {
     let payload = {
       user_id: this.user.id,
-      hora_inicio: new Date().toISOString(),
       tipo_veiculo: this.veiculo,
       nome_rodovia: this.rodovia,
       faixa: this.faixa,
