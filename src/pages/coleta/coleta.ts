@@ -26,9 +26,12 @@ export class ColetaPage {
   faixa = ''
   rodovia = ""
   veiculo = 1
+  velocidade: number
+  espacamento: number
   veiculos = [{ id: 1, nome: "" }]
   user: User_data
   anotacoes = ''
+  frequencia = 1000
 
   //pra exibição
   status = false
@@ -109,14 +112,19 @@ export class ColetaPage {
     await this.get_rodovia_name()
     loader.dismiss()
   }
-
+  calcula_frequencia() {
+    this.frequencia = ((this.espacamento / (this.velocidade/3.6)) * 1000) //em milisegundos
+  }
   create_trajeto() {
+    console.log('velocidade m/s', this.velocidade)
     let payload = {
       user_id: this.user.id,
       tipo_veiculo: this.veiculo,
       nome_rodovia: this.rodovia,
       faixa: this.faixa,
-      observacao: this.anotacoes
+      observacao: this.anotacoes,
+      velocidade: this.velocidade / 3.6,
+      espacamento: this.espacamento
     }
     this._http.post(base_url + '/path', payload)
       .map(res => res.json())
@@ -159,7 +167,7 @@ export class ColetaPage {
   }
 
   leitor_acelerometro(path_id) {
-    var subscription = this.deviceMotion.watchAcceleration({ frequency: 1000 })
+    var subscription = this.deviceMotion.watchAcceleration({ frequency: this.frequencia })
       .subscribe((acceleration: DeviceMotionAccelerationData) => {
         console.log(acceleration);
         let payload = {
@@ -200,7 +208,7 @@ export class ColetaPage {
       });
   }
   leitor_giroscopio(path_id) {
-    let subscription = this.gyroscope.watch({ frequency: 1000 })
+    let subscription = this.gyroscope.watch({ frequency: this.frequencia })
       .subscribe((orientation: GyroscopeOrientation) => {
         console.log('gyroscope', orientation.x, orientation.y, orientation.z, orientation.timestamp);
         let payload = {

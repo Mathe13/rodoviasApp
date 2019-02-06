@@ -37,18 +37,29 @@
               </ng-template>
             </ion-select>
           </ion-item>
-          <ion-item>
 
+          <ion-item>
             <ion-label for="rodovia">Rodovia</ion-label>
             <ion-input required [(ngModel)]="rodovia" type="text" name="rodovia" placeholder="rodovia" value=""></ion-input>
           </ion-item>
-          <ion-item>
 
+          <ion-item>
             <ion-label for="faixa">Faixa</ion-label>
             <ion-input required [(ngModel)]="faixa" type="text" name="faixa" placeholder="esquerda/direita" value=""></ion-input>
           </ion-item>
-          <ion-item>
 
+          <ion-item>
+            <ion-label for="velocidade">Velocidade km/h</ion-label>
+            <ion-input required [(ngModel)]="velocidade" type="number" name="velocidade" placeholder="Velocidade" value=""></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label for="espacamento">Espaçamento m</ion-label>
+            <ion-input required [(ngModel)]="espacamento" type="number" name="espacamento" placeholder="Espaçamento desejado entre leituras"
+              value=""></ion-input>
+          </ion-item>
+
+          <ion-item>
             <ion-label for="rodovia">Anotações</ion-label>
             <ion-textarea required [(ngModel)]="anotacoes" type="text" name="anotacoes" placeholder="anotacoes" value=""></ion-textarea>
           </ion-item>
