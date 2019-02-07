@@ -28,6 +28,8 @@ import { BrMaskerModule } from 'brmasker-ionic-3';
 import { CadastroPage } from '../pages/cadastro/cadastro';
 import { PerfilPage } from '../pages/perfil/perfil';
 import { LeiturasPage } from '../pages/leituras/leituras';
+// import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+
 
 @NgModule({
   declarations: [
@@ -74,7 +76,7 @@ import { LeiturasPage } from '../pages/leituras/leituras';
     Geolocation,
     DeviceMotion,
     Gyroscope,
-
+    // SocialSharing,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
