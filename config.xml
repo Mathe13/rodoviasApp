@@ -92,6 +92,10 @@
     <plugin name="cordova-plugin-gyroscope" spec="^0.1.4" />
     <allow-navigation href="http://192.168.1.10:8100" />
     <plugin name="cordova-sqlite-storage" spec="2.6.0" />
+    <plugin name="cordova-plugin-x-socialsharing" spec="^4">
+        <variable name="ANDROID_SUPPORT_V4_VERSION" value="24.1.1+" />
+    </plugin>
+    <plugin name="cordova-plugin-request-location-accuracy" spec="^4" />
     <engine name="browser" spec="5.0.4" />
     <engine name="android" spec="7.0.0" />
 </widget>

@@ -11,6 +11,7 @@ import { Http } from '@angular/http'
 import { Storage } from '@ionic/storage';
 import { InicioPage } from '../inicio/inicio';
 import { User_data } from '../../app/models/user';
+import { LocationAccuracy } from '@ionic-native/location-accuracy/';
 
 
 
@@ -50,7 +51,8 @@ export class ColetaPage {
     private alertCtrl: AlertController,
     private gyroscope: Gyroscope,
     private loadCtrl: LoadingController,
-    private Platform: Platform
+    private Platform: Platform,
+    private locationAccuracy: LocationAccuracy
     // private sensores: sensores
   ) {
 
@@ -69,6 +71,22 @@ export class ColetaPage {
 
     })
 
+
+  }
+  requisita_precisao() {
+    console.log('requisitando precisao')
+
+    this.locationAccuracy.canRequest().then((canRequest: boolean) => {
+
+      if (canRequest) {
+        // the accuracy option will be ignored by iOS
+        this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
+          () => console.log('Request successful'),
+          error => console.log('Error requesting location permissions', error)
+        );
+      }
+
+    }).catch(err => console.log(err))
   }
   stop() {
     this.alertCtrl.create({
@@ -104,6 +122,10 @@ export class ColetaPage {
   abreQuiz() {
     this.quiz = true
   }
+  ionViewDidEnter() {
+
+    this.requisita_precisao();
+  }
   async ionViewDidLoad() {
     let loader = this.loadCtrl.create({ content: 'carregando' })
     loader.present()
@@ -113,7 +135,8 @@ export class ColetaPage {
     loader.dismiss()
   }
   calcula_frequencia() {
-    this.frequencia = ((this.espacamento / (this.velocidade/3.6)) * 1000) //em milisegundos
+    this.frequencia = ((this.espacamento / (this.velocidade / 3.6)) * 1000) //em milisegundos
+    console.log(this.frequencia)
   }
   create_trajeto() {
     console.log('velocidade m/s', this.velocidade)
@@ -126,6 +149,7 @@ export class ColetaPage {
       velocidade: this.velocidade / 3.6,
       espacamento: this.espacamento
     }
+    this.calcula_frequencia()
     this._http.post(base_url + '/path', payload)
       .map(res => res.json())
       .toPromise()
@@ -250,11 +274,10 @@ export class ColetaPage {
         this.consulta_veiculos()
       })
   }
-
-
   pushMapa() {
     this.navCtrl.push(MapaPage)
   }
+
 
 
 

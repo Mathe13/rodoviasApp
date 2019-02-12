@@ -17,6 +17,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 //importados
+import { LocationAccuracy } from '@ionic-native/location-accuracy/';
 import { IonicStorageModule } from '@ionic/storage';
 import { Gyroscope } from '@ionic-native/gyroscope';
 import { Geolocation } from '@ionic-native/geolocation';
@@ -28,7 +29,7 @@ import { BrMaskerModule } from 'brmasker-ionic-3';
 import { CadastroPage } from '../pages/cadastro/cadastro';
 import { PerfilPage } from '../pages/perfil/perfil';
 import { LeiturasPage } from '../pages/leituras/leituras';
-// import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { SocialSharing } from '@ionic-native/social-sharing/';
 
 
 @NgModule({
@@ -76,7 +77,8 @@ import { LeiturasPage } from '../pages/leituras/leituras';
     Geolocation,
     DeviceMotion,
     Gyroscope,
-    // SocialSharing,
+    SocialSharing,
+    LocationAccuracy,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

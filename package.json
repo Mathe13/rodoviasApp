@@ -24,6 +24,8 @@
     "@ionic-native/device-motion": "^4.14.0",
     "@ionic-native/geolocation": "^4.14.0",
     "@ionic-native/gyroscope": "^4.16.0",
+    "@ionic-native/location-accuracy": "^4.20.0",
+    "@ionic-native/social-sharing": "^4.20.0",
     "@ionic-native/splash-screen": "~4.12.0",
     "@ionic-native/status-bar": "~4.12.0",
     "@ionic/storage": "^2.1.3",
@@ -39,7 +41,9 @@
     "cordova-plugin-splashscreen": "^5.0.2",
     "cordova-plugin-statusbar": "^2.4.2",
     "cordova-plugin-whitelist": "^1.3.3",
+    "cordova-plugin-x-socialsharing": "5.4.4",
     "cordova-sqlite-storage": "2.6.0",
+    "es6-promise-plugin": "4.2.2",
     "ionic-angular": "3.9.2",
     "ionicons": "3.0.0",
     "rxjs": "5.5.11",
@@ -65,7 +69,11 @@
       "cordova-plugin-ionic-webview": {},
       "cordova-plugin-ionic-keyboard": {},
       "cordova-plugin-gyroscope": {},
-      "cordova-sqlite-storage": {}
+      "cordova-sqlite-storage": {},
+      "cordova-plugin-x-socialsharing": {
+        "ANDROID_SUPPORT_V4_VERSION": "24.1.1+"
+      },
+      "cordova-plugin-request-location-accuracy": {}
     },
     "platforms": [
       "browser",
