@@ -22,6 +22,8 @@ import { controlador } from '../../app/models/controlador';
 })
 export class ColetaPage {
   //variaveis
+  falhas = []
+  espera: any
   quiz = false
   aviso = false
   faixa = ''
@@ -33,11 +35,7 @@ export class ColetaPage {
   user: User_data
   anotacoes = ''
   frequencia = 1000
-  enviando = {
-    acelerometro: [],
-    giroscopio: [],
-    gps: []
-  }
+  controlador = new controlador()
 
   //pra exibição
   status = false
@@ -123,27 +121,34 @@ export class ColetaPage {
       console.log(err)
       this.salva_leitura()
     })
-    this.espera_envio()
-
-  }
-
-  async espera_envio() {
     let loader = this.loadCtrl.create({
       content: 'enviando dados'
-    });
+    })
     loader.present()
-    setTimeout(() => {
-      loader.dismiss()
-    }, 10000);
-    await Promise.all(this.enviando.giroscopio)
-    console.log('terminou1')
-    await Promise.all(this.enviando.gps)
-    console.log('terminou2')
-    await Promise.all(this.enviando.acelerometro)
-    console.log('terminou3')
-    loader.dismiss()
-    return
+    this.espera = setTimeout(this.espera_envio(loader), 1000)
+
   }
+
+  espera_envio(loader): any {
+    console.log('espera envio')
+    if (this.controlador.see_cont() == 0) {
+      console.log('cont:', this.controlador.see_cont())
+      loader.dismiss();
+      console.log('terminou')
+      clearTimeout(this.espera)
+      this.lida_falhas()
+    }
+
+  }
+  //lida com falhas
+  lida_falhas() {
+    if (this.falhas.length > 0) {
+      this.falhas.forEach(falha => {
+        this.envia_dados(falha.sensor, falha.payload)
+      })
+    }
+  }
+
   abreQuiz() {
     this.quiz = true
   }
@@ -227,7 +232,7 @@ export class ColetaPage {
           datahora: new Date().toISOString()
         }
         this.acelerometro.push(payload)
-        this.enviando.acelerometro.push(this.envia_dados('/acelerometro', payload))
+        this.envia_dados('/acelerometro', payload)
         if (this.status == false) {
           subscription.unsubscribe()
         }
@@ -249,7 +254,7 @@ export class ColetaPage {
           }
           console.log('gps', payload);
           this.gps.push(payload)
-          this.enviando.gps.push(this.envia_dados('/gps', payload))
+          this.envia_dados('/gps', payload)
           if (this.status == false) {
             subscription.unsubscribe()
           }
@@ -268,7 +273,7 @@ export class ColetaPage {
           datahora: new Date().toISOString()
         }
         this.giroscopio.push(payload)
-        this.enviando.giroscopio.push(this.envia_dados('/giroscopio', payload))
+        this.envia_dados('/giroscopio', payload)
         if (this.status == false) {
           subscription.unsubscribe()
         }
@@ -276,12 +281,20 @@ export class ColetaPage {
   }
 
   async envia_dados(sensor, payload) {
+    let tentativas = 5;
+    this.controlador.add_orden('+1')
     this._http.post(base_url + sensor, payload)
       .toPromise()
-      .then(() => { console.log('enviei:' + sensor) })
+      .then(() => { console.log('enviei:' + sensor); this.controlador.add_orden('-1') })
       .catch((err) => {
         console.log('erro ao envia:' + sensor + "\n erro:" + String(err))
-        this.envia_dados(sensor, payload)
+        tentativas--;
+        if (tentativas > 0) {
+          this.envia_dados(sensor, payload)
+        } else {
+          this.controlador.add_orden('-1')
+          this.falhas.push({ sensor: sensor, payload: payload })
+        }
       })
   }
 
