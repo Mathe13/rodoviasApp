@@ -1,5 +1,5 @@
 import { base_url } from '../../app/config';
-import { Gyroscope, GyroscopeOrientation, GyroscopeOptions } from '@ionic-native/gyroscope';
+import { Gyroscope, GyroscopeOrientation } from '@ionic-native/gyroscope';
 import { MapaPage } from '../mapa/mapa';
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController, Button, LoadingController, Platform } from 'ionic-angular';
@@ -12,7 +12,7 @@ import { Storage } from '@ionic/storage';
 import { InicioPage } from '../inicio/inicio';
 import { User_data } from '../../app/models/user';
 import { LocationAccuracy } from '@ionic-native/location-accuracy/';
-
+import { controlador } from '../../app/models/controlador';
 
 
 // @IonicPage()
@@ -33,6 +33,11 @@ export class ColetaPage {
   user: User_data
   anotacoes = ''
   frequencia = 1000
+  enviando = {
+    acelerometro: [],
+    giroscopio: [],
+    gps: []
+  }
 
   //pra exibição
   status = false
@@ -101,6 +106,7 @@ export class ColetaPage {
         { text: 'não' }
       ]
     }).present()
+
   }
 
 
@@ -117,8 +123,27 @@ export class ColetaPage {
       console.log(err)
       this.salva_leitura()
     })
+    this.espera_envio()
+
   }
 
+  async espera_envio() {
+    let loader = this.loadCtrl.create({
+      content: 'enviando dados'
+    });
+    loader.present()
+    setTimeout(() => {
+      loader.dismiss()
+    }, 10000);
+    await Promise.all(this.enviando.giroscopio)
+    console.log('terminou1')
+    await Promise.all(this.enviando.gps)
+    console.log('terminou2')
+    await Promise.all(this.enviando.acelerometro)
+    console.log('terminou3')
+    loader.dismiss()
+    return
+  }
   abreQuiz() {
     this.quiz = true
   }
@@ -202,7 +227,7 @@ export class ColetaPage {
           datahora: new Date().toISOString()
         }
         this.acelerometro.push(payload)
-        this.envia_dados('/acelerometro', payload)
+        this.enviando.acelerometro.push(this.envia_dados('/acelerometro', payload))
         if (this.status == false) {
           subscription.unsubscribe()
         }
@@ -224,7 +249,7 @@ export class ColetaPage {
           }
           console.log('gps', payload);
           this.gps.push(payload)
-          this.envia_dados('/gps', payload)
+          this.enviando.gps.push(this.envia_dados('/gps', payload))
           if (this.status == false) {
             subscription.unsubscribe()
           }
@@ -243,7 +268,7 @@ export class ColetaPage {
           datahora: new Date().toISOString()
         }
         this.giroscopio.push(payload)
-        this.envia_dados('/giroscopio', payload)
+        this.enviando.giroscopio.push(this.envia_dados('/giroscopio', payload))
         if (this.status == false) {
           subscription.unsubscribe()
         }
