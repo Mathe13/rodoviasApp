@@ -110,7 +110,7 @@ export class ColetaPage {
 
   async salva_leitura() {
     let path = this.trajeto
-    path['aceloremtro'] = this.acelerometro
+    path['acelerometro'] = this.acelerometro
     path['giroscopio'] = this.giroscopio
     path['gps'] = this.gps
     this._storage.get('leituras').then(leituras => {
