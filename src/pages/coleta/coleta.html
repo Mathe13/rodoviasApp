@@ -40,21 +40,34 @@
 
           <ion-item>
             <ion-label for="rodovia">Rodovia</ion-label>
-            <ion-input required [(ngModel)]="rodovia" type="text" name="rodovia" placeholder="rodovia" value=""></ion-input>
+            <ion-input required [(ngModel)]="rodovia" type="text" name="rodovia" placeholder="" value=""></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label for="rodovia">Km inicial</ion-label>
+            <ion-input required [(ngModel)]="km_inicio" type="text" name="km_inicio" placeholder="" value=""></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label for="rodovia">Km final</ion-label>
+            <ion-input required [(ngModel)]="km_fm" type="text" name="km_fm" placeholder="" value=""></ion-input>
           </ion-item>
 
           <ion-item>
             <ion-label for="faixa">Faixa</ion-label>
+            <ion-select id="faixa" [(ngModel)]="faixa" multiple="false">
+              <ion-option value='Esquerda'>Esquerda</ion-option>
+              <ion-option value='Direita'>Direita</ion-option>
+            </ion-select>
+
             <ion-input required [(ngModel)]="faixa" type="text" name="faixa" placeholder="esquerda/direita" value=""></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label for="velocidade">Velocidade km/h</ion-label>
-            <ion-input required [(ngModel)]="velocidade" type="number" name="velocidade" placeholder="Velocidade" value=""></ion-input>
+            <ion-label for="velocidade">Velocidade km/h:</ion-label>
+            <ion-input required [(ngModel)]="velocidade" type="number" name="velocidade" placeholder="" value=""></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label for="espacamento">Espaçamento m</ion-label>
+            <ion-label for="espacamento">Espaçamento em metros</ion-label>
             <ion-input required [(ngModel)]="espacamento" type="number" name="espacamento" placeholder="Espaçamento desejado entre leituras"
               value=""></ion-input>
           </ion-item>

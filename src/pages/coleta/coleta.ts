@@ -28,6 +28,8 @@ export class ColetaPage {
   aviso = false
   faixa = ''
   rodovia = ""
+  km_inico = ""
+  km_fim = ""
   veiculo = 1
   velocidade: number
   espacamento: number
@@ -177,7 +179,9 @@ export class ColetaPage {
       faixa: this.faixa,
       observacao: this.anotacoes,
       velocidade: this.velocidade / 3.6,
-      espacamento: this.espacamento
+      espacamento: this.espacamento,
+      km_inico: this.km_inico,
+      km_fim: this.km_fim
     }
     this.calcula_frequencia()
     this._http.post(base_url + '/path', payload)
@@ -262,6 +266,7 @@ export class ColetaPage {
       });
   }
   leitor_giroscopio(path_id) {
+
     let subscription = this.gyroscope.watch({ frequency: this.frequencia })
       .subscribe((orientation: GyroscopeOrientation) => {
         console.log('gyroscope', orientation.x, orientation.y, orientation.z, orientation.timestamp);
