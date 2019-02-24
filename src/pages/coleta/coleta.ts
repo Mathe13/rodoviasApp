@@ -28,7 +28,7 @@ export class ColetaPage {
   aviso = false
   faixa = ''
   rodovia = ""
-  km_inico = ""
+  km_inicio = ""
   km_fim = ""
   veiculo = 1
   velocidade: number
@@ -180,19 +180,21 @@ export class ColetaPage {
       observacao: this.anotacoes,
       velocidade: this.velocidade / 3.6,
       espacamento: this.espacamento,
-      km_inico: this.km_inico,
+      km_inicio: this.km_inicio,
       km_fim: this.km_fim
     }
+    console.log('payload', payload)
     this.calcula_frequencia()
     this._http.post(base_url + '/path', payload)
       .map(res => res.json())
       .toPromise()
       .then(res => {
-        console.log(res)
+        console.log('voltou do server', res)
+        // return
         payload['id'] = res.insertId
         console.log(payload)
         this.trajeto = payload;
-        this.disparaLeituras(res.insertId)
+        // this.disparaLeituras(res.insertId)
       }).catch(err => {
         this.alertCtrl.create({
           title: 'Erro',
