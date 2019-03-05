@@ -49,6 +49,7 @@ export class LoginPage {
           console.log('logou')
           this.events.publish('user:set', result.user)
           this._storage.set('user', result.user)
+          this._storage.set('senha', this.usuario.senha)
           this._storage.set('leituras', [])
           this.navCtrl.setRoot(PrincipalPage)
         } else {

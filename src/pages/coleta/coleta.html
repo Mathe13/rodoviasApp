@@ -18,19 +18,22 @@
   <div id="quiz-mode" *ngIf="!status">
     <ion-card class="cartao-redondo">
       <ion-card-header>
-        Status:<b *ngIf="status">Coletando</b><b *ngIf="!status">Desativado</b>
+        Status:<b *ngIf="status">Coletando</b>
+        <b *ngIf="!status">Desativado</b>
+        <!-- <b style="float: right;">{{hours}}:{{minutes}}:{{seconds}}</b> -->
       </ion-card-header>
 
       <ion-card-content>
+
         <!-- <button ion-button color="danger" full round (click)="stop()">Cancelar</button> -->
-        <button ion-button color="secondary" full round (click)="abreQuiz()" *ngIf="!status && !quiz">Iniciar</button>
+        <!-- <button ion-button color="secondary" full round (click)="abreQuiz()" *ngIf="!status && !quiz">Iniciar</button> -->
 
-        <div class="quiz cartao-redondo" *ngIf="quiz" text-wrap text-center>
+        <div class="quiz cartao-redondo" *ngIf="!status" text-wrap text-center>
 
-          <h5 style="float: left;margin-top: -5%;">Responda</h5>
+          <h4 style="float: left;margin-top: -5%;">Responda</h4>
           <ion-item>
 
-            <ion-label for="veiculo">Tipo de veiculo</ion-label>
+            <ion-label for="veiculo">Tipo de veiculo:</ion-label>
             <ion-select id="veiculo" [(ngModel)]="veiculo" multiple="false">
               <ng-template ngFor let-v [ngForOf]="veiculos">
                 <ion-option value={{v.id}}>{{v.nome}}</ion-option>
@@ -39,26 +42,30 @@
           </ion-item>
 
           <ion-item>
-            <ion-label for="rodovia">Rodovia</ion-label>
+            <ion-label for="rodovia">Rodovia:</ion-label>
             <ion-input required [(ngModel)]="rodovia" type="text" name="rodovia" placeholder="" value=""></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label for="km_inicio">Km inicial</ion-label>
-            <ion-input required [(ngModel)]="km_inicio" type="text" name="km_inicio" placeholder="" value=""></ion-input>
+            <ion-label for="km_inicio">Km inicial:</ion-label>
+            <ion-input required [(ngModel)]="km_inicio" type="number" name="km_inicio" placeholder="" value=""></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label for="km_fim">Km final</ion-label>
-            <ion-input required [(ngModel)]="km_fim" type="text" name="km_fim" placeholder="" value=""></ion-input>
+            <ion-label for="km_fim">Km final:</ion-label>
+            <ion-input required [(ngModel)]="km_fim" type="number" name="km_fim" placeholder="" value=""></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label for="faixa">Faixa</ion-label>
-            <ion-select id="faixa" [(ngModel)]="faixa" multiple="false">
-              <ion-option value='Esquerda'>Esquerda</ion-option>
-              <ion-option value='Direita'>Direita</ion-option>
+            <ion-label for="faixa">Faixa:</ion-label>
+            <ion-select id="faixa" (ionChange)="muda_select();" *ngIf="faixa_select" [(ngModel)]="faixa" multiple="false">
+              <ion-option value='Esquerda'> Esquerda </ion-option>
+              <ion-option value='Direita'> Direita </ion-option>
+              <ion-option value='Central'> Central </ion-option>
+              <!-- mudar pra input de texto quando clickado-->
+              <ion-option value=''>Outra</ion-option>
+
             </ion-select>
 
-            <!-- <ion-input required [(ngModel)]="faixa" type="text" name="faixa" placeholder="esquerda/direita" value=""></ion-input> -->
+            <ion-input required [(ngModel)]="faixa" *ngIf="!faixa_select" type="text" name="faixa" placeholder="" value=""></ion-input>
           </ion-item>
 
           <ion-item>
@@ -67,13 +74,12 @@
           </ion-item>
 
           <ion-item>
-            <ion-label for="espacamento">Espaçamento em metros</ion-label>
-            <ion-input required [(ngModel)]="espacamento" type="number" name="espacamento" placeholder="Espaçamento desejado entre leituras"
-              value=""></ion-input>
+            <ion-label for="espacamento">Distancia em metros <br> entre leituras:</ion-label>
+            <ion-input required [(ngModel)]="espacamento" type="number" name="espacamento" placeholder="" value=""></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label for="rodovia">Anotações</ion-label>
+            <ion-label for="rodovia">Anotações:</ion-label>
             <ion-textarea required [(ngModel)]="anotacoes" type="text" name="anotacoes" placeholder="anotacoes" value=""></ion-textarea>
           </ion-item>
 
@@ -93,7 +99,7 @@
       </ion-card-header>
 
       <ion-card-content>
-        <button ion-button color="danger" full round (click)="stop()">Concluir</button>
+        <button ion-button color="danger" full round (click)="stop()">Concluir Coleta</button>
       </ion-card-content>
     </ion-card>
 

@@ -22,11 +22,12 @@ import { controlador } from '../../app/models/controlador';
 })
 export class ColetaPage {
   //variaveis
+  faixa_select = true
   falhas = []
   espera: any
   quiz = false
   aviso = false
-  faixa = ''
+  faixa = 'Esquerda'
   rodovia = ""
   km_inicio = ""
   km_fim = ""
@@ -45,8 +46,10 @@ export class ColetaPage {
   acelerometro = []
   gps = []
   giroscopio = []
-
-
+  // hours = 0
+  // minutes = 0
+  // seconds = 0
+  // t = 0
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private deviceMotion: DeviceMotion,
@@ -75,9 +78,14 @@ export class ColetaPage {
       }).present()
 
     })
-
-
   }
+  muda_select() {
+    this.faixa_select = (!this.faixa_select)
+  }
+
+
+
+
   requisita_precisao() {
     console.log('requisitando precisao')
 
@@ -135,10 +143,10 @@ export class ColetaPage {
     console.log('espera envio')
     if (this.controlador.see_cont() == 0) {
       console.log('cont:', this.controlador.see_cont())
-      loader.dismiss();
       console.log('terminou')
       clearTimeout(this.espera)
       this.lida_falhas()
+      loader.dismiss();
     }
 
   }
@@ -167,7 +175,11 @@ export class ColetaPage {
     loader.dismiss()
   }
   calcula_frequencia() {
-    this.frequencia = ((this.espacamento / (this.velocidade / 3.6)) * 1000) //em milisegundos
+    if (this.velocidade && this.espacamento) {
+      this.frequencia = ((this.espacamento / (this.velocidade / 3.6)) * 1000) //em milisegundos
+    } else {
+      this.frequencia = 1000
+    }
     console.log(this.frequencia)
   }
   create_trajeto() {
@@ -194,7 +206,7 @@ export class ColetaPage {
         payload['id'] = res.insertId
         console.log(payload)
         this.trajeto = payload;
-        // this.disparaLeituras(res.insertId)
+        this.disparaLeituras(res.insertId)
       }).catch(err => {
         this.alertCtrl.create({
           title: 'Erro',

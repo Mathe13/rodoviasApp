@@ -12,7 +12,8 @@ import { Storage } from '@ionic/storage';
 })
 export class PerfilPage {
     user = this.NavParams.get('user')
-    senha2 = (this.NavParams.get('user')).senha
+    senha = ''
+    senha2 = ''
     constructor(
         public navCtrl: NavController,
         public _http: Http,
@@ -23,6 +24,15 @@ export class PerfilPage {
         public _storage: Storage
     ) {
 
+    }
+    ionViewWillEnter() {
+        this._storage.get('senha').then(
+            (senha) => {
+                console.log(senha)
+                this.senha = senha;
+                this.senha2 = senha;
+            }
+        )
     }
     goToInicio() {
         this.navCtrl.pop()
@@ -37,13 +47,17 @@ export class PerfilPage {
 
 
     atualizar() {
-        if (this.user.senha != this.senha2) {
+        console.log('senha:', this.senha)
+        console.log('senha2:', this.senha2)
+        if (this.senha != this.senha2) {
             this.alertCtrl.create({
                 title: "erro",
                 subTitle: "senhas não combinam",
                 buttons: [{ text: "ok" }]
             }).present();
             return;
+        } else {
+            this.user.senha = this.senha;
         }
         this._http.put(base_url + "/user", this.user)
             .map(res => res.json())

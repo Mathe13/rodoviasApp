@@ -1,35 +1,39 @@
 <ion-header>
-    <ion-navbar color="primary">
-        <button ion-button menuToggle>
-            <ion-icon name="menu"></ion-icon>
-        </button>
-        <ion-title>
-            Início
-        </ion-title>
-    </ion-navbar>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      Início
+    </ion-title>
+  </ion-navbar>
 </ion-header>
 
 
 <ion-content padding style="background-color: #e8e8e8">
-    <ion-card class="cartao-redondo">
-        <ion-card-header>
+  <ion-card class="cartao-redondo">
+    <ion-card-header>
 
-        </ion-card-header>
+    </ion-card-header>
 
-        <ion-card-content>
-            <button ion-button color="secondary" full round (click)="goToPainel()">
-                <ion-icon name="arrow-dropright-circle">
-                    Iniciar Coleta
-                </ion-icon>
-            </button><br>
-            <a href="{{site}}" target="_blank" style="text-decoration: none">
-                <button ion-button color="secondary" full round>
-                    <ion-icon name="globe">
-                        Acessar site
-                    </ion-icon>
-                </button>
-            </a>
-        </ion-card-content>
-    </ion-card>
-
+    <ion-card-content>
+      <button ion-button color="secondary" full round (click)="goToPainel()">
+        <ion-icon name="arrow-dropright-circle">
+          Iniciar Coleta
+        </ion-icon>
+      </button><br>
+      <a href="{{site}}" target="_blank" style="text-decoration: none">
+        <button ion-button color="secondary" full round>
+          <ion-icon name="globe">
+            Acessar site
+          </ion-icon>
+        </button>
+      </a><br>
+      <button ion-button color="danger" full round (click)="logout()">
+        <ion-icon name="arrow-dropright-circle">
+          Sair
+        </ion-icon>
+      </button>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
